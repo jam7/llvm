@@ -1,4 +1,4 @@
-;===- ./lib/Target/Sparc/Disassembler/LLVMBuild.txt ------------*- Conf -*--===;
+;===- ./lib/Target/Simple/Disassembler/LLVMBuild.txt -----------*- Conf -*--===;
 ;
 ;                     The LLVM Compiler Infrastructure
 ;
@@ -17,7 +17,7 @@
 
 [component_0]
 type = Library
-name = SparcDisassembler
-parent = Sparc
-required_libraries = MCDisassembler SparcInfo Support
-add_to_library_groups = Sparc
+name = SimpleDisassembler
+parent = Simple
+required_libraries = MCDisassembler SimpleInfo Support
+add_to_library_groups = Simple

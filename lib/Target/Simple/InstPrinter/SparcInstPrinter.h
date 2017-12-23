@@ -16,6 +16,9 @@
 
 #include "llvm/MC/MCInstPrinter.h"
 
+// Use Simple related stuff instead of Sparc related stuff
+#define SparcInstPrinter SimpleInstPrinter
+
 namespace llvm {
 
 class SparcInstPrinter : public MCInstPrinter {

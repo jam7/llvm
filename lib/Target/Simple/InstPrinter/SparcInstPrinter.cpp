@@ -21,6 +21,10 @@
 #include "llvm/Support/raw_ostream.h"
 using namespace llvm;
 
+// Use Simple related stuff instead of Sparc related stuff
+#define SP Simple
+#define Sparc Simple
+
 #define DEBUG_TYPE "asm-printer"
 
 // The generated AsmMatcher SparcGenAsmWriter uses "Sparc" as the target

@@ -23,6 +23,9 @@
 
 using namespace llvm;
 
+// Use Simple namespace instead of SP
+#define SP Simple
+
 #define GET_INSTRINFO_MC_DESC
 #include "SparcGenInstrInfo.inc"
 
@@ -52,13 +55,13 @@ static MCAsmInfo *createSparcV9MCAsmInfo(const MCRegisterInfo &MRI,
 
 static MCInstrInfo *createSparcMCInstrInfo() {
   MCInstrInfo *X = new MCInstrInfo();
-  InitSparcMCInstrInfo(X);
+  InitSimpleMCInstrInfo(X);
   return X;
 }
 
 static MCRegisterInfo *createSparcMCRegisterInfo(const Triple &TT) {
   MCRegisterInfo *X = new MCRegisterInfo();
-  InitSparcMCRegisterInfo(X, SP::O7);
+  InitSimpleMCRegisterInfo(X, SP::O7);
   return X;
 }
 
@@ -66,7 +69,7 @@ static MCSubtargetInfo *
 createSparcMCSubtargetInfo(const Triple &TT, StringRef CPU, StringRef FS) {
   if (CPU.empty())
     CPU = (TT.getArch() == Triple::sparcv9) ? "v9" : "v8";
-  return createSparcMCSubtargetInfoImpl(TT, CPU, FS);
+  return createSimpleMCSubtargetInfoImpl(TT, CPU, FS);
 }
 
 static MCTargetStreamer *
@@ -89,14 +92,13 @@ static MCInstPrinter *createSparcMCInstPrinter(const Triple &T,
   return new SparcInstPrinter(MAI, MII, MRI);
 }
 
-extern "C" void LLVMInitializeSparcTargetMC() {
+extern "C" void LLVMInitializeSimpleTargetMC() {
   // Register the MC asm info.
-  RegisterMCAsmInfoFn X(getTheSparcTarget(), createSparcMCAsmInfo);
-  RegisterMCAsmInfoFn Y(getTheSparcV9Target(), createSparcV9MCAsmInfo);
-  RegisterMCAsmInfoFn Z(getTheSparcelTarget(), createSparcMCAsmInfo);
+  RegisterMCAsmInfoFn X(getTheSimpleTarget(), createSparcMCAsmInfo);
+  RegisterMCAsmInfoFn Y(getTheSimple64Target(), createSparcV9MCAsmInfo);
 
   for (Target *T :
-       {&getTheSparcTarget(), &getTheSparcV9Target(), &getTheSparcelTarget()}) {
+       {&getTheSimpleTarget(), &getTheSimple64Target()}) {
     // Register the MC instruction info.
     TargetRegistry::RegisterMCInstrInfo(*T, createSparcMCInstrInfo);
 

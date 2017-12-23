@@ -33,6 +33,8 @@
 #include "llvm/Support/KnownBits.h"
 using namespace llvm;
 
+// Use Simple namespace for regsisters instead of SP
+#define SP Simple
 
 //===----------------------------------------------------------------------===//
 // Calling Convention Implementation

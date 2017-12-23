@@ -26,12 +26,14 @@
 
 using namespace llvm;
 
+#define SparcSubtarget SimpleSubtarget
+
 #define DEBUG_TYPE "delay-slot-filler"
 
 STATISTIC(FilledSlots, "Number of delay slots filled");
 
 static cl::opt<bool> DisableDelaySlotFiller(
-  "disable-sparc-delay-filler",
+  "disable-simple-delay-filler",
   cl::init(false),
   cl::desc("Disable the Sparc delay slot filler."),
   cl::Hidden);

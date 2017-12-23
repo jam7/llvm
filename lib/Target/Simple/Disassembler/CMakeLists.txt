@@ -1,3 +1,3 @@
-add_llvm_library(LLVMSparcDisassembler
+add_llvm_library(LLVMSimpleDisassembler
   SparcDisassembler.cpp
   )

@@ -1,4 +1,4 @@
-;===- ./lib/Target/Sparc/MCTargetDesc/LLVMBuild.txt ------------*- Conf -*--===;
+;===- ./lib/Target/Simple/MCTargetDesc/LLVMBuild.txt -----------*- Conf -*--===;
 ;
 ;                     The LLVM Compiler Infrastructure
 ;
@@ -17,7 +17,7 @@
 
 [component_0]
 type = Library
-name = SparcDesc
-parent = Sparc
-required_libraries = MC SparcAsmPrinter SparcInfo Support
-add_to_library_groups = Sparc
+name = SimpleDesc
+parent = Simple
+required_libraries = MC SimpleAsmPrinter SimpleInfo Support
+add_to_library_groups = Simple

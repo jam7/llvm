@@ -19,6 +19,10 @@
 #define GET_REGINFO_HEADER
 #include "SparcGenRegisterInfo.inc"
 
+// Use Simple related stuff instead of Sparc related stuff
+#define SparcRegisterInfo SimpleRegisterInfo
+#define SparcGenRegisterInfo SimpleGenRegisterInfo
+
 namespace llvm {
 struct SparcRegisterInfo : public SparcGenRegisterInfo {
   SparcRegisterInfo();

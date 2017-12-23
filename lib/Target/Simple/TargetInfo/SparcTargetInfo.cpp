@@ -12,24 +12,18 @@
 #include "llvm/Support/TargetRegistry.h"
 using namespace llvm;
 
-Target &llvm::getTheSparcTarget() {
-  static Target TheSparcTarget;
-  return TheSparcTarget;
+Target &llvm::getTheSimpleTarget() {
+  static Target TheSimpleTarget;
+  return TheSimpleTarget;
 }
-Target &llvm::getTheSparcV9Target() {
-  static Target TheSparcV9Target;
-  return TheSparcV9Target;
-}
-Target &llvm::getTheSparcelTarget() {
-  static Target TheSparcelTarget;
-  return TheSparcelTarget;
+Target &llvm::getTheSimple64Target() {
+  static Target TheSimple64Target;
+  return TheSimple64Target;
 }
 
-extern "C" void LLVMInitializeSparcTargetInfo() {
-  RegisterTarget<Triple::sparc, /*HasJIT=*/true> X(getTheSparcTarget(), "sparc",
-                                                   "Sparc", "Sparc");
-  RegisterTarget<Triple::sparcv9, /*HasJIT=*/true> Y(
-      getTheSparcV9Target(), "sparcv9", "Sparc V9", "Sparc");
-  RegisterTarget<Triple::sparcel, /*HasJIT=*/true> Z(
-      getTheSparcelTarget(), "sparcel", "Sparc LE", "Sparc");
+extern "C" void LLVMInitializeSimpleTargetInfo() {
+  RegisterTarget<Triple::simple, /*HasJIT=*/true> X(
+      getTheSimpleTarget(), "simple", "Simple", "Simple");
+  RegisterTarget<Triple::simple64, /*HasJIT=*/true> Y(
+      getTheSimple64Target(), "simple64", "Simple 64", "Simple");
 }

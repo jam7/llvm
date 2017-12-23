@@ -20,6 +20,11 @@
 #define GET_INSTRINFO_HEADER
 #include "SparcGenInstrInfo.inc"
 
+// Use Simple related stuff instead of Sparc related stuff
+#define SparcSubtarget SimpleSubtarget
+#define SparcInstrInfo SimpleInstrInfo
+#define SparcGenInstrInfo SimpleGenInstrInfo
+
 namespace llvm {
 
 class SparcSubtarget;

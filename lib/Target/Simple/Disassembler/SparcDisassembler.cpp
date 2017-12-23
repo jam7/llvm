@@ -43,12 +43,6 @@ public:
 };
 }
 
-namespace llvm {
-Target &getTheSparcTarget();
-Target &getTheSparcV9Target();
-Target &getTheSparcelTarget();
-}
-
 static MCDisassembler *createSparcDisassembler(const Target &T,
                                                const MCSubtargetInfo &STI,
                                                MCContext &Ctx) {
@@ -56,13 +50,11 @@ static MCDisassembler *createSparcDisassembler(const Target &T,
 }
 
 
-extern "C" void LLVMInitializeSparcDisassembler() {
+extern "C" void LLVMInitializeSimpleDisassembler() {
   // Register the disassembler.
-  TargetRegistry::RegisterMCDisassembler(getTheSparcTarget(),
+  TargetRegistry::RegisterMCDisassembler(getTheSimpleTarget(),
                                          createSparcDisassembler);
-  TargetRegistry::RegisterMCDisassembler(getTheSparcV9Target(),
-                                         createSparcDisassembler);
-  TargetRegistry::RegisterMCDisassembler(getTheSparcelTarget(),
+  TargetRegistry::RegisterMCDisassembler(getTheSimple64Target(),
                                          createSparcDisassembler);
 }
 
@@ -351,7 +343,7 @@ DecodeStatus SparcDisassembler::getInstruction(MCInst &Instr, uint64_t &Size,
 
   // Calling the auto-generated decoder function.
   
-  if (STI.getFeatureBits()[Sparc::FeatureV9])
+  if (STI.getFeatureBits()[Simple::FeatureV9])
   {
     Result = decodeInstruction(DecoderTableSparcV932, Instr, Insn, Address, this, STI);
   }

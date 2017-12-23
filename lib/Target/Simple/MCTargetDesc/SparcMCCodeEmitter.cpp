@@ -37,6 +37,10 @@
 
 using namespace llvm;
 
+// Use Simple related stuff instead of Sparc related stuff
+#define SP Simple
+#define SparcMCCodeEmitter SimpleMCCodeEmitter
+
 #define DEBUG_TYPE "mccodeemitter"
 
 STATISTIC(MCNumEmitted, "Number of MC instructions emitted");

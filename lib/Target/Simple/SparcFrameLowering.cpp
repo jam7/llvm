@@ -27,8 +27,12 @@
 
 using namespace llvm;
 
+// Use Simple related stuff instead of Sparc related stuff
+#define SparcInstrInfo SimpleInstrInfo
+#define SparcRegisterInfo SimpleRegisterInfo
+
 static cl::opt<bool>
-DisableLeafProc("disable-sparc-leaf-proc",
+DisableLeafProc("disable-simple-leaf-proc",
                 cl::init(false),
                 cl::desc("Disable Sparc leaf procedure optimization."),
                 cl::Hidden);

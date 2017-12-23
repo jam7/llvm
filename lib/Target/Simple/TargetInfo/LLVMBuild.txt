@@ -1,4 +1,4 @@
-;===- ./lib/Target/Sparc/TargetInfo/LLVMBuild.txt --------------*- Conf -*--===;
+;===- ./lib/Target/Simple/TargetInfo/LLVMBuild.txt -------------*- Conf -*--===;
 ;
 ;                     The LLVM Compiler Infrastructure
 ;
@@ -17,7 +17,7 @@
 
 [component_0]
 type = Library
-name = SparcInfo
-parent = Sparc
+name = SimpleInfo
+parent = Simple
 required_libraries = Support
-add_to_library_groups = Sparc
+add_to_library_groups = Simple

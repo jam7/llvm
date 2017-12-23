@@ -20,11 +20,10 @@
 #include "llvm/Support/TargetRegistry.h"
 using namespace llvm;
 
-extern "C" void LLVMInitializeSparcTarget() {
+extern "C" void LLVMInitializeSimpleTarget() {
   // Register the target.
-  RegisterTargetMachine<SparcV8TargetMachine> X(getTheSparcTarget());
-  RegisterTargetMachine<SparcV9TargetMachine> Y(getTheSparcV9Target());
-  RegisterTargetMachine<SparcelTargetMachine> Z(getTheSparcelTarget());
+  RegisterTargetMachine<Simple32TargetMachine> X(getTheSimpleTarget());
+  RegisterTargetMachine<Simple64TargetMachine> Y(getTheSimple64Target());
 }
 
 static std::string computeDataLayout(const Triple &T, bool is64Bit) {
@@ -182,9 +181,9 @@ void SparcPassConfig::addPreEmitPass(){
   }
 }
 
-void SparcV8TargetMachine::anchor() { }
+void Simple32TargetMachine::anchor() { }
 
-SparcV8TargetMachine::SparcV8TargetMachine(const Target &T, const Triple &TT,
+Simple32TargetMachine::Simple32TargetMachine(const Target &T, const Triple &TT,
                                            StringRef CPU, StringRef FS,
                                            const TargetOptions &Options,
                                            Optional<Reloc::Model> RM,
@@ -192,22 +191,12 @@ SparcV8TargetMachine::SparcV8TargetMachine(const Target &T, const Triple &TT,
                                            CodeGenOpt::Level OL, bool JIT)
     : SparcTargetMachine(T, TT, CPU, FS, Options, RM, CM, OL, JIT, false) {}
 
-void SparcV9TargetMachine::anchor() { }
+void Simple64TargetMachine::anchor() { }
 
-SparcV9TargetMachine::SparcV9TargetMachine(const Target &T, const Triple &TT,
+Simple64TargetMachine::Simple64TargetMachine(const Target &T, const Triple &TT,
                                            StringRef CPU, StringRef FS,
                                            const TargetOptions &Options,
                                            Optional<Reloc::Model> RM,
                                            Optional<CodeModel::Model> CM,
                                            CodeGenOpt::Level OL, bool JIT)
     : SparcTargetMachine(T, TT, CPU, FS, Options, RM, CM, OL, JIT, true) {}
-
-void SparcelTargetMachine::anchor() {}
-
-SparcelTargetMachine::SparcelTargetMachine(const Target &T, const Triple &TT,
-                                           StringRef CPU, StringRef FS,
-                                           const TargetOptions &Options,
-                                           Optional<Reloc::Model> RM,
-                                           Optional<CodeModel::Model> CM,
-                                           CodeGenOpt::Level OL, bool JIT)
-    : SparcTargetMachine(T, TT, CPU, FS, Options, RM, CM, OL, JIT, false) {}

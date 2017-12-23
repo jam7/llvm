@@ -31,7 +31,7 @@ using namespace llvm;
 #include "SparcGenRegisterInfo.inc"
 
 static cl::opt<bool>
-ReserveAppRegisters("sparc-reserve-app-registers", cl::Hidden, cl::init(false),
+ReserveAppRegisters("simple-reserve-app-registers", cl::Hidden, cl::init(false),
                     cl::desc("Reserve application registers (%g2-%g4)"));
 
 SparcRegisterInfo::SparcRegisterInfo() : SparcGenRegisterInfo(SP::O7) {}

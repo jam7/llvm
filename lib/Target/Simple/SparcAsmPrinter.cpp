@@ -442,8 +442,7 @@ bool SparcAsmPrinter::PrintAsmMemoryOperand(const MachineInstr *MI,
 }
 
 // Force static initialization.
-extern "C" void LLVMInitializeSparcAsmPrinter() {
-  RegisterAsmPrinter<SparcAsmPrinter> X(getTheSparcTarget());
-  RegisterAsmPrinter<SparcAsmPrinter> Y(getTheSparcV9Target());
-  RegisterAsmPrinter<SparcAsmPrinter> Z(getTheSparcelTarget());
+extern "C" void LLVMInitializeSimpleAsmPrinter() {
+  RegisterAsmPrinter<SparcAsmPrinter> X(getTheSimpleTarget());
+  RegisterAsmPrinter<SparcAsmPrinter> Y(getTheSimple64Target());
 }

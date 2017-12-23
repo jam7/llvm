@@ -1,3 +1,3 @@
-add_llvm_library(LLVMSparcAsmPrinter
+add_llvm_library(LLVMSimpleAsmPrinter
   SparcInstPrinter.cpp
   )

@@ -9,9 +9,9 @@ tablegen(LLVM SparcGenAsmMatcher.inc -gen-asm-matcher)
 tablegen(LLVM SparcGenDAGISel.inc -gen-dag-isel)
 tablegen(LLVM SparcGenSubtargetInfo.inc -gen-subtarget)
 tablegen(LLVM SparcGenCallingConv.inc -gen-callingconv)
-add_public_tablegen_target(SparcCommonTableGen)
+add_public_tablegen_target(SimpleCommonTableGen)
 
-add_llvm_target(SparcCodeGen
+add_llvm_target(SimpleCodeGen
   DelaySlotFiller.cpp
   LeonPasses.cpp
   SparcAsmPrinter.cpp

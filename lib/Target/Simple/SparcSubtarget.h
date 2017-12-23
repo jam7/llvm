@@ -26,6 +26,10 @@
 #define GET_SUBTARGETINFO_HEADER
 #include "SparcGenSubtargetInfo.inc"
 
+// Use Simple related stuff instead of Sparc related stuff
+#define SparcSubtarget SimpleSubtarget
+#define SparcGenSubtargetInfo SimpleGenSubtargetInfo
+
 namespace llvm {
 class StringRef;
 

@@ -17,6 +17,10 @@
 #include "Sparc.h"
 #include "llvm/CodeGen/TargetFrameLowering.h"
 
+// Use Simple related stuff instead of Sparc related stuff
+#define SparcSubtarget SimpleSubtarget
+#define SparcFrameLowering SimpleFrameLowering
+
 namespace llvm {
 
 class SparcSubtarget;

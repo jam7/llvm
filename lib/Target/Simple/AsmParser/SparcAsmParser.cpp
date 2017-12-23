@@ -37,6 +37,12 @@
 
 using namespace llvm;
 
+// Use Simple related stuff instead of Sparc related stuff
+#define SP Simple
+#define Sparc Simple
+#define SparcOperand SimpleOperand
+#define SparcAsmParser SimpleAsmParser
+
 // The generated AsmMatcher SparcGenAsmMatcher uses "Sparc" as the target
 // namespace. But SPARC backend uses "SP" as its namespace.
 namespace llvm {
@@ -1274,10 +1280,9 @@ bool SparcAsmParser::matchSparcAsmModifiers(const MCExpr *&EVal,
   return true;
 }
 
-extern "C" void LLVMInitializeSparcAsmParser() {
-  RegisterMCAsmParser<SparcAsmParser> A(getTheSparcTarget());
-  RegisterMCAsmParser<SparcAsmParser> B(getTheSparcV9Target());
-  RegisterMCAsmParser<SparcAsmParser> C(getTheSparcelTarget());
+extern "C" void LLVMInitializeSimpleAsmParser() {
+  RegisterMCAsmParser<SimpleAsmParser> A(getTheSimpleTarget());
+  RegisterMCAsmParser<SimpleAsmParser> B(getTheSimple64Target());
 }
 
 #define GET_REGISTER_MATCHER

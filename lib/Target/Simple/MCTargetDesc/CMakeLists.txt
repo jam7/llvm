@@ -1,4 +1,4 @@
-add_llvm_library(LLVMSparcDesc
+add_llvm_library(LLVMSimpleDesc
   SparcAsmBackend.cpp
   SparcELFObjectWriter.cpp
   SparcMCAsmInfo.cpp

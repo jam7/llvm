@@ -13,15 +13,15 @@
 
 class SparcReg<bits<16> Enc, string n> : Register<n> {
   let HWEncoding = Enc;
-  let Namespace = "SP";
+  let Namespace = "Simple";
 }
 
 class SparcCtrlReg<bits<16> Enc, string n>: Register<n> {
   let HWEncoding = Enc;
-  let Namespace = "SP";
+  let Namespace = "Simple";
 }
 
-let Namespace = "SP" in {
+let Namespace = "Simple" in {
 def sub_even : SubRegIndex<32>;
 def sub_odd  : SubRegIndex<32, 32>;
 def sub_even64 : SubRegIndex<64>;
@@ -325,14 +325,14 @@ def C30_C31 : Rdi<30, "C30", [C30, C31]>;
 // This register class should not be used to hold i64 values, use the I64Regs
 // register class for that. The i64 type is included here to allow i64 patterns
 // using the integer instructions.
-def IntRegs : RegisterClass<"SP", [i32, i64], 32,
+def IntRegs : RegisterClass<"Simple", [i32, i64], 32,
                             (add (sequence "I%u", 0, 7),
                                  (sequence "G%u", 0, 7),
                                  (sequence "L%u", 0, 7),
                                  (sequence "O%u", 0, 7))>;
 
 // Should be in the same order as IntRegs.
-def IntPair : RegisterClass<"SP", [v2i32], 64,
+def IntPair : RegisterClass<"Simple", [v2i32], 64,
     (add I0_I1, I2_I3, I4_I5, I6_I7,
          G0_G1, G2_G3, G4_G5, G6_G7,
          L0_L1, L2_L3, L4_L5, L6_L7,
@@ -342,31 +342,31 @@ def IntPair : RegisterClass<"SP", [v2i32], 64,
 // These are the same as the 32-bit registers, so TableGen will consider this
 // to be a sub-class of IntRegs. That works out because requiring a 64-bit
 // spill slot is a stricter constraint than only requiring a 32-bit spill slot.
-def I64Regs : RegisterClass<"SP", [i64], 64, (add IntRegs)>;
+def I64Regs : RegisterClass<"Simple", [i64], 64, (add IntRegs)>;
 
 // Floating point register classes.
-def FPRegs : RegisterClass<"SP", [f32], 32, (sequence "F%u", 0, 31)>;
-def DFPRegs : RegisterClass<"SP", [f64], 64, (sequence "D%u", 0, 31)>;
-def QFPRegs : RegisterClass<"SP", [f128], 128, (sequence "Q%u", 0, 15)>;
+def FPRegs : RegisterClass<"Simple", [f32], 32, (sequence "F%u", 0, 31)>;
+def DFPRegs : RegisterClass<"Simple", [f64], 64, (sequence "D%u", 0, 31)>;
+def QFPRegs : RegisterClass<"Simple", [f128], 128, (sequence "Q%u", 0, 15)>;
 
 // The Low?FPRegs classes are used only for inline-asm constraints.
-def LowDFPRegs : RegisterClass<"SP", [f64], 64, (sequence "D%u", 0, 15)>;
-def LowQFPRegs : RegisterClass<"SP", [f128], 128, (sequence "Q%u", 0, 7)>;
+def LowDFPRegs : RegisterClass<"Simple", [f64], 64, (sequence "D%u", 0, 15)>;
+def LowQFPRegs : RegisterClass<"Simple", [f128], 128, (sequence "Q%u", 0, 7)>;
 
 // Floating point control register classes.
-def FCCRegs : RegisterClass<"SP", [i1], 1, (sequence "FCC%u", 0, 3)>;
+def FCCRegs : RegisterClass<"Simple", [i1], 1, (sequence "FCC%u", 0, 3)>;
 
 let isAllocatable = 0 in {
   // Ancillary state registers
-  def ASRRegs : RegisterClass<"SP", [i32], 32,
+  def ASRRegs : RegisterClass<"Simple", [i32], 32,
                               (add Y, (sequence "ASR%u", 1, 31))>;
                             
   // This register class should not be used to hold i64 values.
-  def CoprocRegs : RegisterClass<"SP", [i32], 32,
+  def CoprocRegs : RegisterClass<"Simple", [i32], 32,
                                 (add (sequence "C%u", 0, 31))>;
 
   // Should be in the same order as CoprocRegs.
-  def CoprocPair : RegisterClass<"SP", [v2i32], 64,
+  def CoprocPair : RegisterClass<"Simple", [v2i32], 64,
     (add C0_C1,   C2_C3,   C4_C5,   C6_C7,   
          C8_C9,   C10_C11, C12_C13, C14_C15,
          C16_C17, C18_C19, C20_C21, C22_C23,
@@ -374,6 +374,6 @@ let isAllocatable = 0 in {
 }
 
 // Privileged Registers
-def PRRegs : RegisterClass<"SP", [i64], 64,
+def PRRegs : RegisterClass<"Simple", [i64], 64,
     (add TPC, TNPC, TSTATE, TT, TICK, TBA, PSTATE, TL, PIL, CWP,
          CANSAVE, CANRESTORE, CLEANWIN, OTHERWIN, WSTATE)>;

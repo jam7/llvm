@@ -18,6 +18,11 @@
 #include "Sparc.h"
 #include "llvm/CodeGen/TargetLowering.h"
 
+// Use Simple namespace instead of SP
+#define SP Simple
+#define SparcSubtarget SimpleSubtarget
+#define SparcTargetLowering SimpleTargetLowering
+
 namespace llvm {
   class SparcSubtarget;
 

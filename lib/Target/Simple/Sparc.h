@@ -19,6 +19,9 @@
 #include "llvm/Support/ErrorHandling.h"
 #include "llvm/Target/TargetMachine.h"
 
+// Use Simple related stuff instead of Sparc related stuff
+#define SparcTargetMachine SimpleTargetMachine
+
 namespace llvm {
   class FunctionPass;
   class SparcTargetMachine;

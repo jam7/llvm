@@ -72,9 +72,9 @@ include "SparcCallingConv.td"
 include "SparcSchedule.td"
 include "SparcInstrInfo.td"
 
-def SparcInstrInfo : InstrInfo;
+def SimpleInstrInfo : InstrInfo;
 
-def SparcAsmParser : AsmParser {
+def SimpleAsmParser : AsmParser {
   bit ShouldEmitMatchRegisterName = 0;
 }
 
@@ -165,15 +165,15 @@ def : Processor<"gr740", LEON4Itineraries,
 // Declare the target which we are implementing
 //===----------------------------------------------------------------------===//
 
-def SparcAsmWriter : AsmWriter {
+def SimpleAsmWriter : AsmWriter {
   string AsmWriterClassName  = "InstPrinter";
   int PassSubtarget = 1;
   int Variant = 0;
 }
 
-def Sparc : Target {
+def Simple : Target {
   // Pull in Instruction Info:
-  let InstructionSet = SparcInstrInfo;
-  let AssemblyParsers  = [SparcAsmParser];
-  let AssemblyWriters = [SparcAsmWriter];
+  let InstructionSet = SimpleInstrInfo;
+  let AssemblyParsers  = [SimpleAsmParser];
+  let AssemblyWriters = [SimpleAsmWriter];
 }

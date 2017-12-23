@@ -18,6 +18,9 @@
 #include "SparcSubtarget.h"
 #include "llvm/Target/TargetMachine.h"
 
+// Use Simple related stuff instead of Sparc related stuff
+#define SparcTargetMachine SimpleTargetMachine
+
 namespace llvm {
 
 class SparcTargetMachine : public LLVMTargetMachine {
@@ -48,10 +51,10 @@ public:
 
 /// Sparc 32-bit target machine
 ///
-class SparcV8TargetMachine : public SparcTargetMachine {
+class Simple32TargetMachine : public SparcTargetMachine {
   virtual void anchor();
 public:
-  SparcV8TargetMachine(const Target &T, const Triple &TT, StringRef CPU,
+  Simple32TargetMachine(const Target &T, const Triple &TT, StringRef CPU,
                        StringRef FS, const TargetOptions &Options,
                        Optional<Reloc::Model> RM, Optional<CodeModel::Model> CM,
                        CodeGenOpt::Level OL, bool JIT);
@@ -59,20 +62,10 @@ public:
 
 /// Sparc 64-bit target machine
 ///
-class SparcV9TargetMachine : public SparcTargetMachine {
+class Simple64TargetMachine : public SparcTargetMachine {
   virtual void anchor();
 public:
-  SparcV9TargetMachine(const Target &T, const Triple &TT, StringRef CPU,
-                       StringRef FS, const TargetOptions &Options,
-                       Optional<Reloc::Model> RM, Optional<CodeModel::Model> CM,
-                       CodeGenOpt::Level OL, bool JIT);
-};
-
-class SparcelTargetMachine : public SparcTargetMachine {
-  virtual void anchor();
-
-public:
-  SparcelTargetMachine(const Target &T, const Triple &TT, StringRef CPU,
+  Simple64TargetMachine(const Target &T, const Triple &TT, StringRef CPU,
                        StringRef FS, const TargetOptions &Options,
                        Optional<Reloc::Model> RM, Optional<CodeModel::Model> CM,
                        CodeGenOpt::Level OL, bool JIT);

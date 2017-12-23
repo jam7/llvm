@@ -12,7 +12,7 @@ class InstSP<dag outs, dag ins, string asmstr, list<dag> pattern,
    : Instruction {
   field bits<32> Inst;
 
-  let Namespace = "SP";
+  let Namespace = "Simple";
   let Size = 4;
 
   bits<2> op;
