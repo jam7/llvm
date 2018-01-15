@@ -97,14 +97,14 @@ static unsigned adjustFixupValue(unsigned Kind, uint64_t Value) {
 }
 
 namespace {
-  class SparcAsmBackend : public MCAsmBackend {
+  class SimpleAsmBackend : public MCAsmBackend {
   protected:
     const Target &TheTarget;
     bool IsLittleEndian;
     bool Is64Bit;
 
   public:
-    SparcAsmBackend(const Target &T)
+    SimpleAsmBackend(const Target &T)
         : MCAsmBackend(), TheTarget(T),
           IsLittleEndian(StringRef(TheTarget.getName()) == "sparcel"),
           Is64Bit(StringRef(TheTarget.getName()) == "sparcv9") {}
@@ -268,11 +268,11 @@ namespace {
     }
   };
 
-  class ELFSparcAsmBackend : public SparcAsmBackend {
+  class ELFSimpleAsmBackend : public SimpleAsmBackend {
     Triple::OSType OSType;
   public:
-    ELFSparcAsmBackend(const Target &T, Triple::OSType OSType) :
-      SparcAsmBackend(T), OSType(OSType) { }
+    ELFSimpleAsmBackend(const Target &T, Triple::OSType OSType) :
+      SimpleAsmBackend(T), OSType(OSType) { }
 
     void applyFixup(const MCAssembler &Asm, const MCFixup &Fixup,
                     const MCValue &Target, MutableArrayRef<char> Data,
@@ -295,15 +295,15 @@ namespace {
     std::unique_ptr<MCObjectWriter>
     createObjectWriter(raw_pwrite_stream &OS) const override {
       uint8_t OSABI = MCELFObjectTargetWriter::getOSABI(OSType);
-      return createSparcELFObjectWriter(OS, Is64Bit, IsLittleEndian, OSABI);
+      return createSimpleELFObjectWriter(OS, Is64Bit, IsLittleEndian, OSABI);
     }
   };
 
 } // end anonymous namespace
 
-MCAsmBackend *llvm::createSparcAsmBackend(const Target &T,
-                                          const MCSubtargetInfo &STI,
-                                          const MCRegisterInfo &MRI,
-                                          const MCTargetOptions &Options) {
-  return new ELFSparcAsmBackend(T, STI.getTargetTriple().getOS());
+MCAsmBackend *llvm::createSimpleAsmBackend(const Target &T,
+                                           const MCSubtargetInfo &STI,
+                                           const MCRegisterInfo &MRI,
+                                           const MCTargetOptions &Options) {
+  return new ELFSimpleAsmBackend(T, STI.getTargetTriple().getOS());
 }

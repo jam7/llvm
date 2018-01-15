@@ -19,12 +19,14 @@
 
 using namespace llvm;
 
+#define SparcELFObjectWriter SimpleELFObjectWriter
+
 namespace {
   class SparcELFObjectWriter : public MCELFObjectTargetWriter {
   public:
     SparcELFObjectWriter(bool Is64Bit, uint8_t OSABI)
       : MCELFObjectTargetWriter(Is64Bit, OSABI,
-                                Is64Bit ?  ELF::EM_SPARCV9 : ELF::EM_SPARC,
+                                ELF::EM_SIMPLE,
                                 /*HasRelocationAddend*/ true) {}
 
     ~SparcELFObjectWriter() override {}
@@ -46,69 +48,69 @@ unsigned SparcELFObjectWriter::getRelocType(MCContext &Ctx,
 
   if (const SparcMCExpr *SExpr = dyn_cast<SparcMCExpr>(Fixup.getValue())) {
     if (SExpr->getKind() == SparcMCExpr::VK_Sparc_R_DISP32)
-      return ELF::R_SPARC_DISP32;
+      return ELF::R_SIMPLE_DISP32;
   }
 
   if (IsPCRel) {
     switch((unsigned)Fixup.getKind()) {
     default:
       llvm_unreachable("Unimplemented fixup -> relocation");
-    case FK_Data_1:                  return ELF::R_SPARC_DISP8;
-    case FK_Data_2:                  return ELF::R_SPARC_DISP16;
-    case FK_Data_4:                  return ELF::R_SPARC_DISP32;
-    case FK_Data_8:                  return ELF::R_SPARC_DISP64;
-    case Sparc::fixup_sparc_call30:  return ELF::R_SPARC_WDISP30;
-    case Sparc::fixup_sparc_br22:    return ELF::R_SPARC_WDISP22;
-    case Sparc::fixup_sparc_br19:    return ELF::R_SPARC_WDISP19;
-    case Sparc::fixup_sparc_pc22:    return ELF::R_SPARC_PC22;
-    case Sparc::fixup_sparc_pc10:    return ELF::R_SPARC_PC10;
-    case Sparc::fixup_sparc_wplt30:  return ELF::R_SPARC_WPLT30;
+    case FK_Data_1:                  return ELF::R_SIMPLE_DISP8;
+    case FK_Data_2:                  return ELF::R_SIMPLE_DISP16;
+    case FK_Data_4:                  return ELF::R_SIMPLE_DISP32;
+    case FK_Data_8:                  return ELF::R_SIMPLE_DISP64;
+    case Sparc::fixup_sparc_call30:  return ELF::R_SIMPLE_WDISP30;
+    case Sparc::fixup_sparc_br22:    return ELF::R_SIMPLE_WDISP22;
+    case Sparc::fixup_sparc_br19:    return ELF::R_SIMPLE_WDISP19;
+    case Sparc::fixup_sparc_pc22:    return ELF::R_SIMPLE_PC22;
+    case Sparc::fixup_sparc_pc10:    return ELF::R_SIMPLE_PC10;
+    case Sparc::fixup_sparc_wplt30:  return ELF::R_SIMPLE_WPLT30;
     }
   }
 
   switch((unsigned)Fixup.getKind()) {
   default:
     llvm_unreachable("Unimplemented fixup -> relocation");
-  case FK_Data_1:                return ELF::R_SPARC_8;
+  case FK_Data_1:                return ELF::R_SIMPLE_8;
   case FK_Data_2:                return ((Fixup.getOffset() % 2)
-                                         ? ELF::R_SPARC_UA16
-                                         : ELF::R_SPARC_16);
+                                         ? ELF::R_SIMPLE_UA16
+                                         : ELF::R_SIMPLE_16);
   case FK_Data_4:                return ((Fixup.getOffset() % 4)
-                                         ? ELF::R_SPARC_UA32
-                                         : ELF::R_SPARC_32);
+                                         ? ELF::R_SIMPLE_UA32
+                                         : ELF::R_SIMPLE_32);
   case FK_Data_8:                return ((Fixup.getOffset() % 8)
-                                         ? ELF::R_SPARC_UA64
-                                         : ELF::R_SPARC_64);
-  case Sparc::fixup_sparc_hi22:  return ELF::R_SPARC_HI22;
-  case Sparc::fixup_sparc_lo10:  return ELF::R_SPARC_LO10;
-  case Sparc::fixup_sparc_h44:   return ELF::R_SPARC_H44;
-  case Sparc::fixup_sparc_m44:   return ELF::R_SPARC_M44;
-  case Sparc::fixup_sparc_l44:   return ELF::R_SPARC_L44;
-  case Sparc::fixup_sparc_hh:    return ELF::R_SPARC_HH22;
-  case Sparc::fixup_sparc_hm:    return ELF::R_SPARC_HM10;
-  case Sparc::fixup_sparc_got22: return ELF::R_SPARC_GOT22;
-  case Sparc::fixup_sparc_got10: return ELF::R_SPARC_GOT10;
-  case Sparc::fixup_sparc_tls_gd_hi22:   return ELF::R_SPARC_TLS_GD_HI22;
-  case Sparc::fixup_sparc_tls_gd_lo10:   return ELF::R_SPARC_TLS_GD_LO10;
-  case Sparc::fixup_sparc_tls_gd_add:    return ELF::R_SPARC_TLS_GD_ADD;
-  case Sparc::fixup_sparc_tls_gd_call:   return ELF::R_SPARC_TLS_GD_CALL;
-  case Sparc::fixup_sparc_tls_ldm_hi22:  return ELF::R_SPARC_TLS_LDM_HI22;
-  case Sparc::fixup_sparc_tls_ldm_lo10:  return ELF::R_SPARC_TLS_LDM_LO10;
-  case Sparc::fixup_sparc_tls_ldm_add:   return ELF::R_SPARC_TLS_LDM_ADD;
-  case Sparc::fixup_sparc_tls_ldm_call:  return ELF::R_SPARC_TLS_LDM_CALL;
-  case Sparc::fixup_sparc_tls_ldo_hix22: return ELF::R_SPARC_TLS_LDO_HIX22;
-  case Sparc::fixup_sparc_tls_ldo_lox10: return ELF::R_SPARC_TLS_LDO_LOX10;
-  case Sparc::fixup_sparc_tls_ldo_add:   return ELF::R_SPARC_TLS_LDO_ADD;
-  case Sparc::fixup_sparc_tls_ie_hi22:   return ELF::R_SPARC_TLS_IE_HI22;
-  case Sparc::fixup_sparc_tls_ie_lo10:   return ELF::R_SPARC_TLS_IE_LO10;
-  case Sparc::fixup_sparc_tls_ie_ld:     return ELF::R_SPARC_TLS_IE_LD;
-  case Sparc::fixup_sparc_tls_ie_ldx:    return ELF::R_SPARC_TLS_IE_LDX;
-  case Sparc::fixup_sparc_tls_ie_add:    return ELF::R_SPARC_TLS_IE_ADD;
-  case Sparc::fixup_sparc_tls_le_hix22:  return ELF::R_SPARC_TLS_LE_HIX22;
-  case Sparc::fixup_sparc_tls_le_lox10:  return ELF::R_SPARC_TLS_LE_LOX10;
+                                         ? ELF::R_SIMPLE_UA64
+                                         : ELF::R_SIMPLE_64);
+  case Sparc::fixup_sparc_hi22:  return ELF::R_SIMPLE_HI22;
+  case Sparc::fixup_sparc_lo10:  return ELF::R_SIMPLE_LO10;
+  case Sparc::fixup_sparc_h44:   return ELF::R_SIMPLE_H44;
+  case Sparc::fixup_sparc_m44:   return ELF::R_SIMPLE_M44;
+  case Sparc::fixup_sparc_l44:   return ELF::R_SIMPLE_L44;
+  case Sparc::fixup_sparc_hh:    return ELF::R_SIMPLE_HH22;
+  case Sparc::fixup_sparc_hm:    return ELF::R_SIMPLE_HM10;
+  case Sparc::fixup_sparc_got22: return ELF::R_SIMPLE_GOT22;
+  case Sparc::fixup_sparc_got10: return ELF::R_SIMPLE_GOT10;
+  case Sparc::fixup_sparc_tls_gd_hi22:   return ELF::R_SIMPLE_TLS_GD_HI22;
+  case Sparc::fixup_sparc_tls_gd_lo10:   return ELF::R_SIMPLE_TLS_GD_LO10;
+  case Sparc::fixup_sparc_tls_gd_add:    return ELF::R_SIMPLE_TLS_GD_ADD;
+  case Sparc::fixup_sparc_tls_gd_call:   return ELF::R_SIMPLE_TLS_GD_CALL;
+  case Sparc::fixup_sparc_tls_ldm_hi22:  return ELF::R_SIMPLE_TLS_LDM_HI22;
+  case Sparc::fixup_sparc_tls_ldm_lo10:  return ELF::R_SIMPLE_TLS_LDM_LO10;
+  case Sparc::fixup_sparc_tls_ldm_add:   return ELF::R_SIMPLE_TLS_LDM_ADD;
+  case Sparc::fixup_sparc_tls_ldm_call:  return ELF::R_SIMPLE_TLS_LDM_CALL;
+  case Sparc::fixup_sparc_tls_ldo_hix22: return ELF::R_SIMPLE_TLS_LDO_HIX22;
+  case Sparc::fixup_sparc_tls_ldo_lox10: return ELF::R_SIMPLE_TLS_LDO_LOX10;
+  case Sparc::fixup_sparc_tls_ldo_add:   return ELF::R_SIMPLE_TLS_LDO_ADD;
+  case Sparc::fixup_sparc_tls_ie_hi22:   return ELF::R_SIMPLE_TLS_IE_HI22;
+  case Sparc::fixup_sparc_tls_ie_lo10:   return ELF::R_SIMPLE_TLS_IE_LO10;
+  case Sparc::fixup_sparc_tls_ie_ld:     return ELF::R_SIMPLE_TLS_IE_LD;
+  case Sparc::fixup_sparc_tls_ie_ldx:    return ELF::R_SIMPLE_TLS_IE_LDX;
+  case Sparc::fixup_sparc_tls_ie_add:    return ELF::R_SIMPLE_TLS_IE_ADD;
+  case Sparc::fixup_sparc_tls_le_hix22:  return ELF::R_SIMPLE_TLS_LE_HIX22;
+  case Sparc::fixup_sparc_tls_le_lox10:  return ELF::R_SIMPLE_TLS_LE_LOX10;
   }
 
-  return ELF::R_SPARC_NONE;
+  return ELF::R_SIMPLE_NONE;
 }
 
 bool SparcELFObjectWriter::needsRelocateWithSymbol(const MCSymbol &Sym,
@@ -121,19 +123,19 @@ bool SparcELFObjectWriter::needsRelocateWithSymbol(const MCSymbol &Sym,
     // the offset of the symbol within the section is irrelevant to
     // where the GOT entry is. Don't need to list all the TLS entries,
     // as they're all marked as requiring a symbol anyways.
-    case ELF::R_SPARC_GOT10:
-    case ELF::R_SPARC_GOT13:
-    case ELF::R_SPARC_GOT22:
-    case ELF::R_SPARC_GOTDATA_HIX22:
-    case ELF::R_SPARC_GOTDATA_LOX10:
-    case ELF::R_SPARC_GOTDATA_OP_HIX22:
-    case ELF::R_SPARC_GOTDATA_OP_LOX10:
+    case ELF::R_SIMPLE_GOT10:
+    case ELF::R_SIMPLE_GOT13:
+    case ELF::R_SIMPLE_GOT22:
+    case ELF::R_SIMPLE_GOTDATA_HIX22:
+    case ELF::R_SIMPLE_GOTDATA_LOX10:
+    case ELF::R_SIMPLE_GOTDATA_OP_HIX22:
+    case ELF::R_SIMPLE_GOTDATA_OP_LOX10:
       return true;
   }
 }
 
 std::unique_ptr<MCObjectWriter>
-llvm::createSparcELFObjectWriter(raw_pwrite_stream &OS, bool Is64Bit,
+llvm::createSimpleELFObjectWriter(raw_pwrite_stream &OS, bool Is64Bit,
                                  bool IsLittleEndian, uint8_t OSABI) {
   auto MOTW = llvm::make_unique<SparcELFObjectWriter>(Is64Bit, OSABI);
   return createELFObjectWriter(std::move(MOTW), OS, IsLittleEndian);

@@ -317,6 +317,8 @@ enum {
   // such numbers for an official value for WebAssembly. As soon as one is
   // allocated, this enum will be updated to use it.
   EM_WEBASSEMBLY = 0x4157, // WebAssembly architecture
+
+  EM_SIMPLE = 0x4280,     // SPARC
 };
 
 // Object file classes.
@@ -725,6 +727,11 @@ enum {
 // ELF Relocation types for BPF
 enum {
 #include "ELFRelocs/BPF.def"
+};
+
+// ELF Relocation type for Simple.
+enum {
+#include "ELFRelocs/Simple.def"
 };
 
 #undef ELF_RELOC

@@ -12,6 +12,8 @@
 
 #include "llvm/MC/MCFixup.h"
 
+#define Sparc Simple
+
 namespace llvm {
   namespace Sparc {
     enum Fixups {

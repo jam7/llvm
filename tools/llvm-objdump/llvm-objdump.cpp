@@ -757,6 +757,7 @@ static std::error_code getRelocationValueString(const ELFObjectFile<ELFT> *Obj,
   case ELF::EM_MIPS:
   case ELF::EM_BPF:
   case ELF::EM_RISCV:
+  case ELF::EM_SIMPLE:
     res = Target;
     break;
   case ELF::EM_WEBASSEMBLY:

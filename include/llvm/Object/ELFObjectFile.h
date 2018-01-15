@@ -992,6 +992,8 @@ StringRef ELFObjectFile<ELFT>::getFileFormatName() const {
       return "ELF32-wasm";
     case ELF::EM_AMDGPU:
       return "ELF32-amdgpu";
+    case ELF::EM_SIMPLE:
+      return "ELF32-simple";
     default:
       return "ELF32-unknown";
     }
@@ -1082,6 +1084,9 @@ template <class ELFT> Triple::ArchType ELFObjectFile<ELFT>::getArch() const {
     case ELF::ELFCLASS64: return Triple::wasm64;
     default: return Triple::UnknownArch;
     }
+
+  case ELF::EM_SIMPLE:
+    return Triple::simple;
 
   case ELF::EM_AMDGPU: {
     if (!IsLittleEndian)

@@ -28,7 +28,7 @@ extern "C" void LLVMInitializeSimpleTarget() {
 
 static std::string computeDataLayout(const Triple &T, bool is64Bit) {
   // Sparc is typically big endian, but some are little.
-  std::string Ret = T.getArch() == Triple::sparcel ? "e" : "E";
+  std::string Ret = "e";
   Ret += "-m:e";
 
   // Some ABIs have 32bit pointers.

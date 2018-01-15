@@ -88,6 +88,7 @@ class Proc<string Name, list<SubtargetFeature> Features>
 def : Proc<"generic",         []>;
 def : Proc<"v7",              [FeatureSoftMulDiv, FeatureNoFSMULD]>;
 def : Proc<"v8",              []>;
+def : Proc<"simple",          []>;
 def : Proc<"supersparc",      []>;
 def : Proc<"sparclite",       []>;
 def : Proc<"f934",            []>;

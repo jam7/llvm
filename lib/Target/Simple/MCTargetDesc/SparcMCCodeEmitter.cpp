@@ -235,8 +235,8 @@ getBranchOnRegTargetOpValue(const MCInst &MI, unsigned OpNo,
 #define ENABLE_INSTR_PREDICATE_VERIFIER
 #include "SparcGenMCCodeEmitter.inc"
 
-MCCodeEmitter *llvm::createSparcMCCodeEmitter(const MCInstrInfo &MCII,
-                                              const MCRegisterInfo &MRI,
-                                              MCContext &Ctx) {
+MCCodeEmitter *llvm::createSimpleMCCodeEmitter(const MCInstrInfo &MCII,
+                                               const MCRegisterInfo &MRI,
+                                               MCContext &Ctx) {
   return new SparcMCCodeEmitter(MCII, Ctx);
 }
